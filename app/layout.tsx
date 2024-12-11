@@ -1,9 +1,8 @@
-import '../styles/globals.css'
+import './globals.css'
 import { Inter } from 'next/font/google'
-import { Provider } from 'react-redux'
-import { store } from '../store'
 import Header from '../components/header'
 import Footer from '../components/footer'
+import { Providers } from '../components/providers'
 import DarkModeToggle from '../components/dark-mode-toggle'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,14 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white transition-colors`}>
-        <Provider store={store}>
+        <Providers>
           <Header />
           <div className="container mx-auto px-4 py-4">
             <DarkModeToggle />
             {children}
           </div>
           <Footer />
-        </Provider>
+        </Providers>
       </body>
     </html>
   )
