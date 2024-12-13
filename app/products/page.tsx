@@ -1,41 +1,117 @@
-import axios from 'axios';
-import ProductCard from '../../components/product-card';
-import Sidebar from '../../components/sidebar';
-import Pagination from '../../components/pagination';
+'use client';
 
-export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined }}) {
-  const category = searchParams.category;
-  const page = Number(searchParams.page) || 1;
-  const productsPerPage = 8;
+import { useEffect, useState } from 'react';
+import ProductCard from "@/components/shared/product-card";
+import axios from "axios";
+import Pagination from "@/components/shared/pagination";
 
-  let products = [];
-  if (category) {
-    const res = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
-    products = res.data;
-  } else {
-    const res = await axios.get('https://fakestoreapi.com/products');
-    products = res.data;
-  }
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+  category: string;
+  description: string;
+}
 
-  const startIndex = (page - 1) * productsPerPage;
-  const currentProducts = products.slice(startIndex, startIndex + productsPerPage);
+export default function ProductListPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const itemsPerPage = 9; // 3 rows of 3 items per page
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `https://fakestoreapi.com/products${selectedCategory ? `/category/${selectedCategory}` : ''}`
+        );
+        setProducts(response.data);
+        setTotalItems(response.data.length);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('https://fakestoreapi.com/products/categories');
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchProducts();
+    fetchCategories();
+  }, [selectedCategory]);
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    setCurrentPage(1); // Reset to page 1 when a new category is selected
+  };
+
+  const paginatedProducts = products.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
-    <div className="flex flex-col md:flex-row gap-8">
-      <div className="w-full md:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {currentProducts.map((product: any) => (
+    <div className="container mx-auto flex gap-8 px-16 py-8">
+      {/* Product Grid */}
+      <div className="flex-grow">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          {paginatedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-        <Pagination 
-          totalItems={products.length} 
-          itemsPerPage={productsPerPage} 
-          currentPage={page} 
-          category={category}
-        />
+
+        {/* Pagination */}
+        <div className="col-span-3 mt-6 flex justify-center">
+          <Pagination
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
-      <Sidebar />
+
+      {/* Categories Sidebar */}
+      <aside className="w-[250px] hidden lg:block">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Category</h2>
+        <ul className="space-y-2">
+          <li>
+            <button
+              className={`text-sm font-medium ${
+                selectedCategory === null
+                  ? 'text-orange-500'
+                  : 'text-gray-700 hover:text-orange-500'
+              }`}
+              onClick={() => handleCategoryChange(null)}
+            >
+              All Categories
+            </button>
+          </li>
+          {categories.map((category) => (
+            <li key={category}>
+              <button
+                className={`text-sm font-medium ${
+                  selectedCategory === category
+                    ? 'text-orange-500'
+                    : 'text-gray-700 hover:text-orange-500'
+                }`}
+                onClick={() => handleCategoryChange(category)}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
     </div>
   );
 }
