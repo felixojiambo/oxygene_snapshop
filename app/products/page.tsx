@@ -15,6 +15,7 @@ interface Product {
 }
 
 export default function ProductListPage() {
+
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

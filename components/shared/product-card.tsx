@@ -11,8 +11,8 @@ export default function ProductCard({ product }: { product: Product }) {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, quantity: 1 }));
-  };
+  dispatch(addToCart(product)); 
+};
 
   return (
     <div className="border rounded-md p-4 bg-white shadow-sm flex flex-col items-center space-y-3 max-w-[300px]">
