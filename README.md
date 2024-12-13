@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **SnapShop Application**
 
-## Getting Started
+An advanced, responsive e-commerce platform built using Next.js, Tailwind CSS, and Redux Toolkit, integrating the FakerStore API for products and categories.
 
-First, run the development server:
+---
+
+## **Features**
+
+- **Product Listing**:
+  - Displays all products in a paginated layout.
+  - Allows filtering products by category.
+- **Product Details**:
+  - Detailed view of a product, including its name, price, description, and category.
+  - Option to adjust the quantity and add items to the cart.
+- **Cart Management**:
+  - Uses Redux Toolkit to manage cart state.
+  - Allows adding, removing, and updating product quantities dynamically.
+- **Dynamic Routing**:
+  - Product details page is dynamically generated based on product IDs.
+- **Responsive Design**:
+  - Fully optimized for mobile, tablet, and desktop views.
+  - Built using Tailwind CSS for modern and efficient styling.
+
+---
+
+## **Technologies Used**
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **API Integration**: [FakerStore API](https://fakestoreapi.com/)
+- **Icons and UI Components**: Tailwind and Headless UI
+
+---
+
+## **Getting Started**
+
+### **1. Prerequisites**
+
+Ensure the following are installed on your system:
+
+- Node.js (v16 or later)
+- npm or yarn
+
+### **2. Clone the Repository**
+
+```bash
+git clone https://github.com/felixojiambo/oxygene_snapshop
+cd oxygene_snapshop
+```
+
+### **3. Install Dependencies**
+
+```bash
+npm install
+```
+
+### **4. Environment Variables**
+
+Create a `.env.local` file in the root directory and configure any necessary environment variables (if applicable).
+
+### **5. Run the Development Server**
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navigate to `http://localhost:3000` to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## **Key Features Explained**
 
-## Learn More
+### **1. Product Listing**
+- API: `https://fakestoreapi.com/products`
+- Displays paginated products with category filtering.
 
-To learn more about Next.js, take a look at the following resources:
+### **2. Product Details**
+- API: `https://fakestoreapi.com/products/:id`
+- Shows detailed information about a single product.
+- Includes the ability to add a product to the cart.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **3. Cart Management**
+- Built using Redux Toolkit.
+- Allows for:
+  - Adding products to the cart.
+  - Incrementing/decrementing quantities.
+  - Removing products from the cart.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **API Endpoints Used**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Get All Products**: `https://fakestoreapi.com/products`
+2. **Get Product by ID**: `https://fakestoreapi.com/products/:id`
+3. **Get All Categories**: `https://fakestoreapi.com/products/categories`
+4. **Get Products in Category**: `https://fakestoreapi.com/products/category/:category`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## **Customization**
+
+You can easily customize the project by modifying:
+
+1. **Styling**: Update `globals.css` or directly use Tailwind utility classes in components.
+2. **State Management**: Add more slices in the `store/` folder to extend functionality.
+3. **API Integration**: Replace FakerStore API with your custom backend API.
+
+---
+
+## **Contributing**
+
+1. Fork the repository.
+2. Create a new feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Create a pull request.
+
+---
+
+## **License**
+
+This project is licensed under the MIT License.
+
+---
+
+## **Contact**
+
