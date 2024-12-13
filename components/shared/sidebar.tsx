@@ -1,11 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Sidebar() {
   const [categories, setCategories] = useState<string[]>([]);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     axios.get('https://fakestoreapi.com/products/categories')
@@ -14,21 +15,20 @@ export default function Sidebar() {
   }, []);
 
   const handleCategoryClick = (category: string) => {
-    router.push(`/products?category=${category}&page=1`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('category', category);
+    router.push(`/products?${params.toString()}`);
   };
 
   return (
-    <aside className="w-full md:w-1/4 pl-8 border-l border-[#e5e5e5]">
-      <div className="flex items-center mb-6 relative">
-        <h3 className="font-bold text-xs uppercase tracking-wider text-[#333]">Category</h3>
-        <div className="ml-2 text-xs text-[#f26b1d] rotate-90">▸</div>
-      </div>
+    <aside className="w-full md:w-1/4 p-4 border-l dark:border-gray-700">
+      <h3 className="font-bold mb-4">Categories</h3>
       <ul className="space-y-2">
         {categories.map(category => (
           <li key={category}>
             <button
               onClick={() => handleCategoryClick(category)}
-              className="block text-left w-full text-[#333] hover:text-[#f26b1d] capitalize transition-colors"
+              className="text-left w-full hover:text-orange-500 capitalize"
             >
               {category}
             </button>

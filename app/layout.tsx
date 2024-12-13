@@ -1,28 +1,33 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { Providers } from '../components/providers'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { Providers } from '../components/layout/providers';
+import Header from '../components/layout/header';
+import Footer from '../components/layout/footer';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Product List - Industrium',
   description: 'E-commerce site using FakerShop API',
-}
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white text-[#333] font-sans`}>
         <Providers>
+          {/* Header */}
           <Header />
-          <main className="container mx-auto px-4 py-8">
+
+          {/* Main Content Area */}
+          <main className="flex flex-col min-h-screen px-4">
             {children}
           </main>
+
+          {/* Footer */}
           <Footer />
         </Providers>
       </body>
     </html>
-  )
+  );
 }

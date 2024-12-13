@@ -80,8 +80,7 @@ export default function ProductListPage() {
         </div>
       </div>
 
-      {/* Categories Sidebar */}
-      <aside className="w-[250px] hidden lg:block">
+       <aside className="w-[250px] hidden lg:block">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Category</h2>
         <ul className="space-y-2">
           <li>
@@ -115,3 +114,4 @@ export default function ProductListPage() {
     </div>
   );
 }
+
